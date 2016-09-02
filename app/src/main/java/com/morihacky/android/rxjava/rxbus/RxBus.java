@@ -14,6 +14,8 @@ public class RxBus {
 
     // If multiple threads are going to emit events to this
     // then it must be made thread-safe like this instead
+    // 在并发情况下，不推荐使用通常的Subject对象，而是推荐使用SerializedSubject，并发时只允许一个线程调用
+    // onNext()等方法！
     private final Subject<Object, Object> _bus = new SerializedSubject<>(PublishSubject.create());
 
     public void send(Object o) {
